@@ -97,6 +97,10 @@ export function createMessageCollector(options: CreateMessageCollectorOptions): 
 
     await sender.send(title, content)
 
+    console.log("--消息推送--")
+    console.log(title)
+    console.log(content)
+
     // Send via Server酱 Turbo if configured
     const sendKeys = options.serverChanSendKey ? toArray(options.serverChanSendKey) : []
     for (const sendKey of sendKeys) {
