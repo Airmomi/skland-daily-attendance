@@ -10,6 +10,9 @@ services:
       # 通知 URL (可选)
       - SKLAND_NOTIFICATION_URLS=${SKLAND_NOTIFICATION_URLS:-}
 
+      # Server 酱 Turbo SendKey (可选)
+      - SKLAND_SERVERCHAN_SENDKEY=${SKLAND_SERVERCHAN_SENDKEY:-}
+
       # 最大重试次数 (可选，默认为 3)
       - SKLAND_MAX_RETRIES=${SKLAND_MAX_RETRIES:-3}
 

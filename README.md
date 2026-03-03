@@ -44,6 +44,7 @@
    |------------|------|---------|
    | `SKLAND_TOKENS` | 森空岛凭据，多个账号用逗号分隔 | 必填 |
    | `SKLAND_NOTIFICATION_URLS` | 通知 URL，多个 URL 用逗号分隔 | 可选 |
+   | `SKLAND_SERVERCHAN_SENDKEY` | Server 酱 Turbo SendKey，多个用逗号分隔 | 可选 |
    | `SKLAND_MAX_RETRIES` | 最大重试次数，默认为 3 | 可选 |
    | `SKLAND_ANONYMOUS` | 隐藏角色名，设置任意值即可开启（推荐使用 `true` 或 `1`），默认关闭 | 可选 |
 
@@ -224,6 +225,14 @@ SKLAND_TOKENS=your-token-1,your-token-2
 
 ```bash
 SKLAND_NOTIFICATION_URLS="Statocysts 格式通知 URL"
+```
+
+#### Server 酱 Turbo
+
+也可以使用 [Server 酱 Turbo](https://sct.ftqq.com/) 发送通知，将 SendKey 设置到环境变量 `SKLAND_SERVERCHAN_SENDKEY` 中，多个 SendKey 用逗号分隔。
+
+```bash
+SKLAND_SERVERCHAN_SENDKEY=your-sendkey
 ```
 
 ### 3. 配置持久化存储（可选）
