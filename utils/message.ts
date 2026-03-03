@@ -90,19 +90,25 @@ export function createMessageCollector(options: CreateMessageCollectorOptions): 
   }
 
   const push = async () => {
+    // 检查是否有消息需要发送
+    if (messages.length === 0) {
+      return
+    }
+
     const title = '【森空岛每日签到】'
     const content = messages.join('\n\n')
     const urls = options.notificationUrls ? toArray(options.notificationUrls) : []
-    const sender = createSender(urls)
+    const sendKeys = options.serverChanSendKey ? toArray(options.serverChanSendKey) : []
 
+    // 检查是否有配置任何通知渠道
+    if (urls.length === 0 && sendKeys.length === 0) {
+      return
+    }
+
+    const sender = createSender(urls)
     await sender.send(title, content)
 
-    console.log("--消息推送--")
-    console.log(title)
-    console.log(content)
-
     // Send via Server酱 Turbo if configured
-    const sendKeys = options.serverChanSendKey ? toArray(options.serverChanSendKey) : []
     for (const sendKey of sendKeys) {
       if (!sendKey)
         continue
