@@ -105,25 +105,30 @@ export function createMessageCollector(options: CreateMessageCollectorOptions): 
       return
     }
 
-    const sender = createSender(urls)
-    await sender.send(title, content)
+    // Send via notificationUrls if configured
+    if (urls.length > 0) {
+      const sender = createSender(urls)
+      await sender.send(title, content)
+    }
 
     // Send via Server酱 Turbo if configured
-    for (const sendKey of sendKeys) {
-      if (!sendKey)
-        continue
-      try {
-        const res = await fetch(`https://sct.ftqq.com/${sendKey}.send`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title, desp: content }),
-        })
-        if (!res.ok) {
-          console.error(`Server酱 Turbo 推送失败: HTTP ${res.status}`)
+    if (sendKeys.length > 0) {
+      for (const sendKey of sendKeys) {
+        if (!sendKey)
+          continue
+        try {
+          const res = await fetch(`https://sct.ftqq.com/${sendKey}.send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title, desp: content }),
+          })
+          if (!res.ok) {
+            console.error(`Server酱 Turbo 推送失败: HTTP ${res.status}`)
+          }
         }
-      }
-      catch (err) {
-        console.error(`Server酱 Turbo 推送失败: ${err instanceof Error ? err.message : String(err)}`)
+        catch (err) {
+          console.error(`Server酱 Turbo 推送失败: ${err instanceof Error ? err.message : String(err)}`)
+        }
       }
     }
 
