@@ -235,7 +235,7 @@ export default defineTask<'success' | 'failed'>({
       }
     }
 
-    if (stats.accounts.successful > 0 || stats.accounts.failed > 0)
+    if (stats.accounts.successful > 0 || stats.accounts.failed > 0 || stats.accounts.skipped > 0)
       await messageCollector.push()
 
     return { result: hasFailed ? 'failed' : 'success' }
