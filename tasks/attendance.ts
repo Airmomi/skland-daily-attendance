@@ -147,9 +147,11 @@ export default defineTask<'success' | 'failed'>({
     const tokens = getSplitByComma(config.tokens)
 
     const notificationUrls = getSplitByComma(config.notificationUrls)
+    const serverChanSendKey = getSplitByComma(config.serverChanSendKey)
 
     const messageCollector = createMessageCollector({
       notificationUrls,
+      serverChanSendKey,
     })
 
     if (tokens.length === 0) {

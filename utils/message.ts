@@ -6,6 +6,7 @@ export function toArray<T>(value: T | T[]): T[] {
 
 export interface CreateMessageCollectorOptions {
   notificationUrls?: string | string[]
+  serverChanSendKey?: string | string[]
   onError?: () => void
 }
 
@@ -95,6 +96,26 @@ export function createMessageCollector(options: CreateMessageCollectorOptions): 
     const sender = createSender(urls)
 
     await sender.send(title, content)
+
+    // Send via Server酱 Turbo if configured
+    const sendKeys = options.serverChanSendKey ? toArray(options.serverChanSendKey) : []
+    for (const sendKey of sendKeys) {
+      if (!sendKey)
+        continue
+      try {
+        const res = await fetch(`https://sct.ftqq.com/${sendKey}.send`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title, desp: content }),
+        })
+        if (!res.ok) {
+          console.error(`Server酱 Turbo 推送失败: HTTP ${res.status}`)
+        }
+      }
+      catch (err) {
+        console.error(`Server酱 Turbo 推送失败: ${err instanceof Error ? err.message : String(err)}`)
+      }
+    }
 
     // Exit with error if any error occurred
     if (hasError && options.onError) {
