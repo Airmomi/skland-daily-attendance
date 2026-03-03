@@ -8,6 +8,8 @@ on:
     secrets:
       SKLAND_TOKENS:
         required: true
+      SKLAND_SERVERCHAN_SENDKEY:
+        required: false
       SKLAND_NOTIFICATION_URLS:
         required: false
       SKLAND_ANONYMOUS:
